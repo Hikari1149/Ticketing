@@ -5,10 +5,10 @@ deploy:
     manifests:
       - ./infra/k8s/*
 build:
-  #local:
-  #  push: false
-  googleCloudBuild:
-    projectId: ticketing-dev-288616
+  local:
+    push: false
+  #googleCloudBuild:
+  #projectId: ticketing-dev-288616
   artifacts:
     - image: hikari94854/auth
       context: auth
