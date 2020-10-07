@@ -1,8 +1,8 @@
 import 'express-async-errors';
 import mongoose from 'mongoose';
 import { app } from './app';
-
-// db
+import { natsWrapper } from './nats-wrapper';
+// start
 const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error('JTW_KEY must be defined');
@@ -11,6 +11,16 @@ const start = async () => {
     throw new Error('MONGO_URI mus be defined');
   }
   try {
+    // nats
+    await natsWrapper.connect('ticketing', 'larawras', 'http://nats-srv:4222');
+
+    natsWrapper.client.on('close', () => {
+      console.log('NATS connection closed');
+      process.exit();
+    });
+    process.on('SIGNIT', () => natsWrapper.client.close());
+    process.on('SIGTERM', () => natsWrapper.client.close());
+    //db
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
