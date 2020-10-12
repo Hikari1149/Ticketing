@@ -4,6 +4,7 @@ import { Ticket } from '../../../models/ticket';
 import { OrderCreatedEvent, OrderStatus } from '@hitickets/common';
 import mongoose from 'mongoose';
 import { Message } from 'node-nats-streaming';
+import { indexTicketRouter } from '../../../routes';
 
 const setup = async () => {
   // Create an instance of the listener
@@ -54,4 +55,15 @@ it('acks the message', async () => {
   await listener.onMessage(data, msg);
 
   expect(msg.ack).toHaveBeenCalled();
+});
+
+it('publishes a ticket updated event', async () => {
+  const { listener, ticket, data, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+
+  const ticketUpatedData = JSON.parse(natsWrapper.client.publish as jest.Mock)
+    .mock.calls[0][1];
+  expect(data.id).toEqual(ticketUpatedData.orderId);
 });

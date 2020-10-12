@@ -271,10 +271,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@hitickets/common@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@hitickets/common/-/common-1.0.7.tgz#f850b4232d65a20753670c7f702b8180bbe398c8"
-  integrity sha512-ZV3Kyf3wnlnaGP92sO7BqDiRjWYeU61BfILpesiQewKDgUR3YLb3WOBQLw2HIlf2Vtj43FmkzJf6UNddhYbuPg==
+"@hitickets/common@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@hitickets/common/-/common-1.0.8.tgz#72f05c328f5936cb7a8449be2e66894e6aa9a780"
+  integrity sha512-XL+WpbRvyVZoBcK7cSR7Hrum6xt590NgnuQHttqBpYZNb8ikBkKM2F34tYYI6iKs4F3GnOeENwrrRdy41uRwng==
   dependencies:
     "@types/cookie-session" "^2.0.41"
     "@types/express" "^4.17.8"
