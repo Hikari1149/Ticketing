@@ -3,6 +3,7 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError, currentUser } from '@hitickets/common';
+import { createChargeRouter } from './routes/new';
 
 const app = express();
 // middleware
@@ -16,6 +17,7 @@ app.use(
 );
 app.use(currentUser);
 //router
+app.use(createChargeRouter);
 
 app.all('*', async (req, res, next) => {
   throw new NotFoundError();

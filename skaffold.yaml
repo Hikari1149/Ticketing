@@ -52,10 +52,10 @@ build:
           - src: 'src/**/*.ts'
             dest: .
     - image: hikari94854/payments
-    context: payments
-    docker:
-      dockerfile: Dockerfile
-    sync:
-      manual:
-        - src: 'src/**/*.ts'
-          dest: .
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
