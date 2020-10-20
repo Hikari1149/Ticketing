@@ -1,16 +1,39 @@
 import React from 'react';
-import axios from 'axios';
-import buildClient from '../api/build-client';
-const Home = ({ currentuser }) => {
-  return currentuser ? (
-    <h1>You are signed in</h1>
-  ) : (
-    <h1>You are not sign in </h1>
+import Link from 'next/link';
+const Home = ({ currentuser, tickets = [] }) => {
+  console.log({ tickets });
+  const ticketList = tickets.map((ticket) => {
+    return (
+      <tr key={ticket.id}>
+        <td>{ticket.title}</td>
+        <td>{ticket.price}</td>
+        <td>
+          <Link href={'/tickets/[ticketId]'} as={`/tickets/${ticket.id}`}>
+            <a>View</a>
+          </Link>
+        </td>
+      </tr>
+    );
+  });
+  return (
+    <div>
+      <h1>Tickets</h1>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+
+        <tbody>{ticketList}</tbody>
+      </table>
+    </div>
   );
 };
-Home.getInitialProps = async ({ req }) => {
-  const client = buildClient({ req });
-  const { data } = await client.get(`/api/users/currentuser`);
-  return data;
+Home.getInitialProps = async (context, client, currentuser) => {
+  const { data } = await client.get('/api/tickets');
+  console.log({ data });
+  return { tickets: data };
 };
 export default Home;
