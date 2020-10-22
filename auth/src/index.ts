@@ -4,7 +4,7 @@ import { app } from './app';
 
 // db
 const start = async () => {
-  if (!process.env.JWT_KEY) {
+  console.log('Starting up...')
     throw new Error('JTW_KEY must be defined');
   }
   if (!process.env.MONGO_URI) {
