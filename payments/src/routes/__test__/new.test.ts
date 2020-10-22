@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import { Order } from '../../models/order';
 import { OrderStatus } from '@hitickets/common';
 import { stripe } from '../../stripe';
-import { Payment } from '../../models/payment';
+//import { Payment } from '../../models/payment';
 
 jest.mock('../../stripe');
 
@@ -53,7 +53,7 @@ it(`return a 400 when purchasing a cancelled order`, async () => {
 
   await request(app)
     .post('/api/payments')
-    .set('Cookie', userId)
+    .set('Cookie', global.signin(userId))
     .send({
       token: `12afwaef3`,
       orderId: order.id,
@@ -67,7 +67,7 @@ it(`return a 201 with valid inputs`, async () => {
   const order = Order.build({
     id: mongoose.Types.ObjectId().toHexString(),
     userId,
-    status: OrderStatus.Cancelled,
+    status: OrderStatus.Created,
     price,
     version: 0,
   });
@@ -75,7 +75,7 @@ it(`return a 201 with valid inputs`, async () => {
 
   await request(app)
     .post('/api/payments')
-    .set('Cookie', userId)
+    .set('Cookie', global.signin(userId))
     .send({
       token: 'tok_visa',
       orderId: order.id,
