@@ -4,7 +4,7 @@ import { app } from './app';
 
 // db
 const start = async () => {
-  console.log('start up..');
+  console.log('start up...');
   if (!process.env.JWT_KEY) {
     throw new Error('JTW_KEY must be defined');
   }
